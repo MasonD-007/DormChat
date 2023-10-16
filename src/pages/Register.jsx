@@ -1,5 +1,5 @@
 import React from 'react'
-
+import upload from '../img/upload.png' 
 
 export const Register = () => {
   return (
@@ -13,9 +13,10 @@ export const Register = () => {
                 <input type='email' placeholder='Email' />
                 <input type='password' placeholder='Password' />
                 <input type='password' placeholder='Confirm Password' />
-                <input type='file' id='file'/>
+                <input style={{display:"none"}} type='file' id='file'/>
                 <label htmlFor='file'>
-                    Upload Profile Picture
+                    <img src={upload} alt='upload' />
+                    <span>Upload a Profile Picture</span>
                 </label>
                 <button>Register</button>
             </form>
