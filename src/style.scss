@@ -127,9 +127,9 @@
                 .logo {
                     font-weight: bold;
 
-                    @include tablet {
+                    /*@include tablet {
                         display: none;
-                    }
+                    }*/
                 }
 
                 .user {
@@ -151,10 +151,10 @@
                         border: none;
                         cursor: pointer;
 
-                        @include tablet {
+                        /*@include tablet {
                             position: absolute;
                             bottom: 10px;
-                        }
+                        }*/
                     }
                 }
             }
