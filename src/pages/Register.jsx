@@ -1,11 +1,13 @@
 import React from 'react'
 import upload from '../img/upload.png' 
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth, db, storage } from '../firebase'
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { doc, setDoc } from 'firebase/firestore'
 
 export const Register = () => {
 
-  const handleSubmin = (e) => {
+  const handleSubmin = async (e) => {
     e.preventDefault();
     const displayName = e.target[0].value;
     const email = e.target[1].value;
@@ -23,8 +25,36 @@ export const Register = () => {
     }
 
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       const user = userCredential.user;
+
+      //Pfp upload
+      const storageRef = ref(storage, displayName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
+            console.log('File available at', downloadURL);
+            await updateProfile(user, {
+              displayName: displayName,
+              photoURL: downloadURL
+            });
+
+            //Firestore-User Info
+            await setDoc(doc(db, "users", user.uid), {
+              uid: user.uid,
+              displayName: displayName,
+              photoURL: downloadURL,
+              email: user.email,
+            });
+          });
+        }
+      )
+
 
       console.log(user);
     })
@@ -33,6 +63,7 @@ export const Register = () => {
       const errorMessage = error.message;
 
       console.log(errorCode, errorMessage);
+      return alert("Something went wrong");
     });
 
   }
