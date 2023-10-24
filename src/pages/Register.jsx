@@ -24,12 +24,15 @@ export const Register = () => {
       return alert('Password must be at least 8 characters');
     }
 
+    let point1 = false;
+    let point2 = false;
+
     createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user;
 
       //Pfp upload
-      const storageRef = ref(storage, `users/${displayName} - ${user.uid}/profile.jpg`);
+      const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg')
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         //"state_changed",
@@ -37,20 +40,26 @@ export const Register = () => {
           console.log(error);
         },
         () => {
+          console.log("Upload successful");
           getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
+             point1 = true
             await updateProfile(user, {
               displayName: displayName,
               photoURL: downloadURL
             })
-
+            point2 = true
             //Firestore-User Info
-            await setDoc(doc(db, "users", user.uid), {
+            setDoc(doc(db, "users", user.uid), {
               uid: user.uid,
               displayName: displayName,
               photoURL: downloadURL,
               email: user.email,
             });
           });
+
+          console.log("Ran Point 1: " + point1);
+          console.log("Ran Point 2: " + point2);
+          console.log("Ran Point 3: True");
         }
       )
 
