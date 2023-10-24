@@ -2,13 +2,19 @@ import React from 'react'
 import upload from '../img/upload.png' 
 
 export const Register = () => {
+
+  const handleSubmin = (e) => {
+    e.preventDefault();
+    
+  }
+
   return (
     <div className='formContainer'>
 
         <div className='formWrapper'>
             <span className='logo'>DormChat</span>
             <span className='title'>Register</span>
-            <form>
+            <form onSubmit={handleSubmin}>
                 <input type='text' placeholder='Display Name' />
                 <input type='email' placeholder='Email' />
                 <input type='password' placeholder='Password' />
