@@ -29,20 +29,19 @@ export const Register = () => {
       const user = userCredential.user;
 
       //Pfp upload
-      const storageRef = ref(storage, displayName);
+      const storageRef = ref(storage, `users/${displayName} - ${user.uid}/profile.jpg`);
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
-
+        //"state_changed",
         (error) => {
           console.log(error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
-            console.log('File available at', downloadURL);
             await updateProfile(user, {
               displayName: displayName,
               photoURL: downloadURL
-            });
+            })
 
             //Firestore-User Info
             await setDoc(doc(db, "users", user.uid), {
