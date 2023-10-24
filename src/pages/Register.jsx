@@ -30,7 +30,6 @@ export const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user;
-
       //Pfp upload
       const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg')
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -47,15 +46,16 @@ export const Register = () => {
               displayName: displayName,
               photoURL: downloadURL
             })
-            point2 = true
-            //Firestore-User Info
-            setDoc(doc(db, "users", user.uid), {
+          });
+
+          point2 = true
+          //Firestore-User Info
+          setDoc(doc(db, "users", user.uid), {
               uid: user.uid,
               displayName: displayName,
               photoURL: downloadURL,
               email: user.email,
             });
-          });
 
           console.log("Ran Point 1: " + point1);
           console.log("Ran Point 2: " + point2);
