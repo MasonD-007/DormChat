@@ -30,6 +30,7 @@ export const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user;
+      console.log("User UID:" + user.uid);
       //Pfp upload
       const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg')
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -41,21 +42,27 @@ export const Register = () => {
         () => {
           console.log("Upload successful");
           getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
-             point1 = true
+            point1 = true
             await updateProfile(user, {
               displayName: displayName,
               photoURL: downloadURL
             })
-          });
 
-          point2 = true
-          //Firestore-User Info
-          setDoc(doc(db, "users", user.uid), {
+            //Firestore-User Info
+            point2 = true
+            await setDoc(doc(db, "users", user.uid), {
               uid: user.uid,
               displayName: displayName,
               photoURL: downloadURL,
               email: user.email,
             });
+
+          }).catch((error) => {
+            //Usual error: FirebaseError: Firebase Storage: Object 'user/Mason1/profile.jpg' does not exist. 
+            //                            (storage/object-not-found)
+            console.log("This is the problem: " + error);
+          })
+          
 
           console.log("Ran Point 1: " + point1);
           console.log("Ran Point 2: " + point2);
