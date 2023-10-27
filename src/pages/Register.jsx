@@ -1,11 +1,13 @@
 import React from 'react'
 import upload from '../img/upload.png' 
-import { createUserWithEmailAndPassword, updateProfile, fetchSignInMethodsForEmail } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, db, storage } from '../firebase'
-import { ref, uploadBytesResumable, getDownloadURL, uploadBytes } from 'firebase/storage'
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
 import { doc, setDoc } from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom'
 
 export const Register = () => {
+  const navigate = useNavigate();
 
   const handleSubmin = async (e) => {
     e.preventDefault();
@@ -35,12 +37,11 @@ export const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user;
-      console.log("User UID:" + user.uid);
 
       //Pfp upload
       const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg');
       uploadBytes(storageRef, file).then(() => {
-        console.log("Upload successful2");
+        console.log("Upload successful");
 
         getDownloadURL(storageRef).then( async (downloadURL) => {
           await updateProfile(user, {
@@ -55,7 +56,10 @@ export const Register = () => {
             photoURL: downloadURL,
             email: user.email,
           });
-         
+
+          await setDoc(doc(db, "userChats", user.uid), {});
+
+          navigate('/');
         })
       });
 
