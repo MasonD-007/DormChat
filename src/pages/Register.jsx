@@ -25,24 +25,18 @@ export const Register = () => {
       return alert('Password must be at least 8 characters');
     }
 
-    //Check if email is already in use
-    const methods = await fetchSignInMethodsForEmail(auth, email);
-    if (methods.length > 0) {
-      console.log('Email already in use');
-      return alert('Email already in use');
-    }
-
     //Check if file is uploaded
     if (file == null) {
       console.log('Please upload a profile picture');
       return alert('Please upload a profile picture');
     }
 
-    //Create user
+    //Create user and checks if email is already in use
     createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user;
       console.log("User UID:" + user.uid);
+
       //Pfp upload
       const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg');
       uploadBytes(storageRef, file).then(() => {
@@ -67,11 +61,14 @@ export const Register = () => {
 
       console.log(user);
       }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      console.log(errorCode, errorMessage);
-      return alert("Something went wrong");
+        if (error == "FirebaseError: Firebase: Error (auth/email-already-in-use).") {
+          console.log('Email is already in use');
+          return alert('Email is already in use');
+        }
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        return alert("Something went wrong");
     });
 
   }
