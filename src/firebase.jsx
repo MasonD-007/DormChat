@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { getFirestore } from 'firebase/firestore'
@@ -9,6 +9,7 @@ import { getFirestore } from 'firebase/firestore'
 const firebaseConfig = {
   apiKey: "AIzaSyDI8Y94MRMERX-iOaWfMwhCYod0jb3g1qQ",
   authDomain: "dormchat-d9744.firebaseapp.com",
+  databaseURL: "https://dormchat-d9744-default-rtdb.firebaseio.com",
   projectId: "dormchat-d9744",
   storageBucket: "dormchat-d9744.appspot.com",
   messagingSenderId: "934565244385",
@@ -16,8 +17,15 @@ const firebaseConfig = {
   measurementId: "G-EP51NY5JBK"
 };
 
+let app;
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+if (!getApps().length) {
+  app = initializeApp(firebaseConfig);
+}else {
+  app = app(); // if already initialized, use that one
+}
+
+export default app;
 export const auth = getAuth();
 export const storage = getStorage();
 export const db = getFirestore();

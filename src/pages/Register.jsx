@@ -1,8 +1,8 @@
 import React from 'react'
 import upload from '../img/upload.png' 
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile, fetchSignInMethodsForEmail } from 'firebase/auth'
 import { auth, db, storage } from '../firebase'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { ref, uploadBytesResumable, getDownloadURL, uploadBytes } from 'firebase/storage'
 import { doc, setDoc } from 'firebase/firestore'
 
 export const Register = () => {
@@ -15,6 +15,7 @@ export const Register = () => {
     const confirmPassword = e.target[3].value;
     const file = e.target[4].files[0];
 
+    //Check if passwords match and are at least 8 characters
     if (password !== confirmPassword) {
       console.log('Passwords do not match');
         return alert('Passwords do not match');
@@ -24,56 +25,48 @@ export const Register = () => {
       return alert('Password must be at least 8 characters');
     }
 
-    let point1 = false;
-    let point2 = false;
+    //Check if email is already in use
+    const methods = await fetchSignInMethodsForEmail(auth, email);
+    if (methods.length > 0) {
+      console.log('Email already in use');
+      return alert('Email already in use');
+    }
 
+    //Check if file is uploaded
+    if (file == null) {
+      console.log('Please upload a profile picture');
+      return alert('Please upload a profile picture');
+    }
+
+    //Create user
     createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user;
       console.log("User UID:" + user.uid);
       //Pfp upload
-      const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg')
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        //"state_changed",
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          console.log("Upload successful");
-          getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
-            point1 = true
-            await updateProfile(user, {
-              displayName: displayName,
-              photoURL: downloadURL
-            })
+      const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg');
+      uploadBytes(storageRef, file).then(() => {
+        console.log("Upload successful2");
 
-            //Firestore-User Info
-            point2 = true
-            await setDoc(doc(db, "users", user.uid), {
-              uid: user.uid,
-              displayName: displayName,
-              photoURL: downloadURL,
-              email: user.email,
-            });
-
-          }).catch((error) => {
-            //Usual error: FirebaseError: Firebase Storage: Object 'user/Mason1/profile.jpg' does not exist. 
-            //                            (storage/object-not-found)
-            console.log("This is the problem: " + error);
+        getDownloadURL(storageRef).then( async (downloadURL) => {
+          await updateProfile(user, {
+            displayName: displayName,
+            photoURL: downloadURL
           })
-          
 
-          console.log("Ran Point 1: " + point1);
-          console.log("Ran Point 2: " + point2);
-          console.log("Ran Point 3: True");
-        }
-      )
-
+          //Firestore-User Info
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            displayName: displayName,
+            photoURL: downloadURL,
+            email: user.email,
+          });
+         
+        })
+      });
 
       console.log(user);
-    })
-    .catch((error) => {
+      }).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
 
@@ -84,8 +77,9 @@ export const Register = () => {
   }
 
   return (
+    <>
+    <title>DormChat | Register</title>
     <div className='formContainer'>
-
         <div className='formWrapper'>
             <span className='logo'>DormChat</span>
             <span className='title'>Register</span>
@@ -104,5 +98,6 @@ export const Register = () => {
             <p>Already have an account? <a href='/login'>Login</a></p>
         </div>
     </div>
+    </>
   )
 }
