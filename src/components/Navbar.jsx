@@ -4,6 +4,8 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 
 export const Navbar = () => {
+  
+
   return (
     <div className='navbar'>
         <span className='logo'>Dorm Chat</span>

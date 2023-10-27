@@ -4,12 +4,12 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, db, storage } from '../firebase'
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
 import { doc, setDoc } from 'firebase/firestore'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 export const Register = () => {
   const navigate = useNavigate();
 
-  const handleSubmin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const displayName = e.target[0].value;
     const email = e.target[1].value;
@@ -84,7 +84,7 @@ export const Register = () => {
         <div className='formWrapper'>
             <span className='logo'>DormChat</span>
             <span className='title'>Register</span>
-            <form onSubmit={handleSubmin}>
+            <form onSubmit={handleSubmit}>
                 <input type='text' placeholder='Display Name' />
                 <input type='email' placeholder='Email' />
                 <input type='password' placeholder='Password' />
@@ -96,7 +96,7 @@ export const Register = () => {
                 </label>
                 <button>Register</button>
             </form>
-            <p>Already have an account? <a href='/login'>Login</a></p>
+            <p>Already have an account? <Link to='/login'>Login</Link></p>
         </div>
     </div>
     </>
