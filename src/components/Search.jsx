@@ -1,17 +1,88 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
+import {collection, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc, updateDoc} from 'firebase/firestore'
+import { db } from '../firebase'
+import { AuthContext } from '../context/AuthContext'
 
 export const Search = () => {
+  const [username, setUsername] = useState('');
+  const [user, setUser] = useState(null);
+  const {currentUser} = useContext(AuthContext);
+
+  const handleSearch = async () => {
+    const q = query(collection(db, "users"), where("displayName", "==", username));
+
+    try{
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      setUser(doc.data());
+    });
+    } catch (error) {
+      console.log(error);
+      return alert("User not found");
+    }
+  }
+
+  const handleKey = (e) => {
+    e.key === 'Enter' && handleSearch()
+  }
+
+  const handleSelect = async () => {
+    const combindId = [user.uid, currentUser.uid].sort().join(':')
+    
+    try{
+      const res = await getDoc(doc(db,"chats", combindId))
+
+      if (!res.exists()){
+        await setDoc(doc(db, "chats", combindId), {
+          users: [user.displayName, currentUser.displayName],
+          messages: []
+        });
+        console.log("Chat created");
+
+
+        await updateDoc(doc(db, "userChats", currentUser.uid),{
+          [combindId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combindId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid),{
+          [combindId + ".userInfo"]: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          },
+          [combindId + ".date"]: serverTimestamp(),
+        });
+      }
+  } catch (error) {
+      console.log(error);
+      return alert("Chat not found");
+    }
+
+    setUser(null);
+    setUsername('');
+  }
+
   return (
     <div className='search'>
         <div className='searchForm'>
-            <input type='text' className='searchInput' placeholder='Find a User' />
+            <input type='text' 
+            className='searchInput' 
+            placeholder='Find a User' 
+            onKeyDown={handleKey} 
+            onChange={e=>setUsername(e.target.value)}
+            value={username}/>
         </div>
-        <div className='userChat'>
-            <img src='https://via.placeholder.com/150' alt='user' className='userChatImg' />
+        {user && <div className='userChat' onClick={handleSelect}>
+            <img src={user.photoURL} alt='user' className='userChatImg' />
             <div className='userChatInfo'>
-                <span>Jan</span>
+                <span>{user.displayName}</span>
             </div>
-        </div>
+        </div>}
     </div>
   )
 }
