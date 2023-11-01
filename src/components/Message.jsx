@@ -32,7 +32,7 @@ export const Message = ({message}) => {
         </div>
         <div className='messageContent'>
             <p>{message.text}</p>
-            {message.img && <p>{message.img}</p>}  
+            <img src={message.img}/>  
         </div>
     </div>
   )
