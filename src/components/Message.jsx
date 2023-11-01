@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
-import test from '../img/faceshot.png';
 
 export const Message = ({message}) => {
   const {currentUser} = useContext(AuthContext);
@@ -15,7 +14,10 @@ export const Message = ({message}) => {
     });
   }
   , [message]);
-  //<img src={message.img} alt="" />}
+  //console.log("The Date: " + message.date.toDate());
+  console.log("The Date2: " + message.date.toDate().toLocaleTimeString());
+  var localTime = message.date.toDate().toLocaleTimeString();
+  console.log("type: " + typeof(localTime));
   return (
     <div ref={ref} className={message.senderId === currentUser.uid 
                   ? "message owner" 
@@ -28,7 +30,7 @@ export const Message = ({message}) => {
                   : data.user.photoURL} 
               alt="" 
             />
-            <span>{}</span>
+            <span>{message.date.toDate().toLocaleTimeString()}</span>
         </div>
         <div className='messageContent'>
             <p>{message.text}</p>

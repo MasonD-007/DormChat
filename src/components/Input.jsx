@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Timestamp, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { v4 as uuid } from 'uuid';
-import { ref, uploadBytesResumable, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { storage } from '../firebase';
 
 export const Input = () => {
@@ -17,11 +17,16 @@ export const Input = () => {
   const {currentUser} = useContext(AuthContext);
   const {data} = useContext(ChatContext);
 
+  const handleKeySend = (e) => {
+    if(e.key === 'Enter'){
+      handleSend();
+    }
+  }
+
   const handleSend = async () => {
-    const file = img;
     if(img){
-      const storageRef = ref(storage, uuid());
-      uploadBytes(storageRef, file).then(() => {
+      const storageRef = ref(storage, 'messagePhotos/'+ uuid());
+      uploadBytes(storageRef, img).then(() => {
         getDownloadURL(storageRef).then( async (downloadURL) => {
           await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
@@ -64,7 +69,7 @@ export const Input = () => {
   };
   return (
     <div className='input'>
-      <input type="text" placeholder='Write a message...' onChange={e=>setText(e.target.value)} value={text}/>
+      <input type="text" placeholder='Write a message...' onChange={e=>setText(e.target.value)} value={text} onKeyDown={handleKeySend}/>
       <div className='send'>
         <img src={Attach} alt="" />
         <input type='file' style={{display:"none"}} id='file' onChange={e=>setImg(e.target.files[0])}/>
