@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import {collection, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc, updateDoc} from 'firebase/firestore'
+import {collection, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc, updateDoc, and, or} from 'firebase/firestore'
 import { db } from '../firebase'
 import { AuthContext } from '../context/AuthContext'
 
@@ -9,8 +9,14 @@ export const Search = () => {
   const {currentUser} = useContext(AuthContext);
 
   const handleSearch = async () => {
-    username = username.toLowerCase();
-    const q = query(collection(db, "users"), where("displayName".toLowerCase(), "==", username));
+    const q = query(collection(db, "users"), where("displayName", "==", username));
+
+    const q2 = query(collection(db, "users"), and(
+        where('displayName', '===', username),   
+      or(
+        where('uid', '!=', currentUser.uid),
+      )
+    ));
 
     try{
     const querySnapshot = await getDocs(q)

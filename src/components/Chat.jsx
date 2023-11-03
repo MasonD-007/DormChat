@@ -10,14 +10,21 @@ import { ChatContext } from "../context/ChatContext";
 export const Chat = () => {
   const { data } = useContext(ChatContext);
 
+  const handleMore = () => {
+    console.log("More");
+  }
+
   return (
     <div className="chat">
       <div className="chatInfo">
+        <img src={data.user?.photoURL} alt="" />
         <span>{data.user?.displayName}</span>
         <div className="chatIcons">
           <img src={Cam} alt="" />
           <img src={Add} alt="" />
-          <img src={More} alt="" />
+          <button onClick={handleMore}>
+            <img src={More} alt="" />
+          </button>
         </div>
       </div>
       <Messages />

@@ -39,7 +39,8 @@ export const Register = () => {
       const user = userCredential.user;
 
       //Pfp upload
-      const storageRef = ref(storage, 'user/' + displayName + '/profile.jpg');
+      const time = new Date().getTime().toPrecision(10);
+      const storageRef = ref(storage, 'user/' + displayName + time + '/profile.jpg');
       uploadBytes(storageRef, file).then(() => {
         console.log("Upload successful");
 

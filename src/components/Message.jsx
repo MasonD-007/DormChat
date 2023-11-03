@@ -29,8 +29,8 @@ export const Message = ({message}) => {
 
   const now = nowDay + nowSeconds;
 
-  console.log("Now: " + now)
-  console.log("Message Time: " + ((message.date.toDate().getDate().valueOf() * 24 * 60 * 60) + message.date.toDate().getSeconds().valueOf()))
+  //console.log("Now: " + now)
+  //console.log("Message Time: " + ((message.date.toDate().getDate().valueOf() * 24 * 60 * 60) + message.date.toDate().getSeconds().valueOf()))
   return (
     <div ref={ref} className={message.senderId === currentUser.uid 
                   ? "message owner" 
@@ -44,8 +44,8 @@ export const Message = ({message}) => {
               alt="" 
             />
             <span>{now - 5 <= (message.date.toDate().getDate().valueOf() * 24 * 60 * 60) + message.date.toDate().getSeconds().valueOf() 
-                  ? "Right Now"
-                  : messageDate
+                  ? "N/A"
+                  : "N/A"
             }</span>
         </div>
         <div className='messageContent'>

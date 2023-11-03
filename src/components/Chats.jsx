@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, deleteField, deleteDoc } from 'firebase/firestore';
 import React, {useEffect, useState, useContext} from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { db } from '../firebase';
@@ -26,6 +26,24 @@ export const Chats = () => {
   const handleSelect = (u) => {
     dispatch({type: "CHANGE_USER", payload: u});
   };
+
+  const handleDelete = (cu) => {
+    const combindId = [cu.uid, currentUser.uid].sort().join(':');
+
+    //Deletes the messages
+    deleteDoc(doc(db, "chats", combindId));
+    
+    //Deletes the chat link from both users
+    updateDoc(doc(db, "userChats", currentUser.uid),{
+      [combindId]: deleteField(),
+    });
+
+    updateDoc(doc(db, "userChats", cu.uid),{
+      [combindId]: deleteField(),
+    });
+    console.log("Chat deleted");
+    
+  }
   
   return (
     <div className='chats'>
@@ -36,7 +54,9 @@ export const Chats = () => {
                 <span>{chat[1].userInfo.displayName}</span>
                 <p>{chat[1].lastMessage?.text}</p>
             </div>
+            <button onClick={()=>handleDelete(chat[1].userInfo)}>Delete Chat</button>
         </div>
+        
         ))}
     </div>
   )
