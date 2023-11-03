@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import upload from '../img/upload.png' 
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, db, storage } from '../firebase'
@@ -8,7 +8,17 @@ import { useNavigate, Link } from 'react-router-dom'
 
 export const Register = () => {
   const navigate = useNavigate();
+  const [uploaded, setUploaded] = React.useState(false);
 
+
+  const handleUpload = (file) => {
+    if (file != null) {
+      setUploaded(true);
+    }
+    else {
+      setUploaded(false);
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const displayName = e.target[0].value;
@@ -90,11 +100,18 @@ export const Register = () => {
                 <input type='email' placeholder='Email' />
                 <input type='password' placeholder='Password' />
                 <input type='password' placeholder='Confirm Password' />
-                <input style={{display:"none"}} type='file' id='file'/>
-                <label htmlFor='file'>
+                <input style={{display:"none"}} type='file' id='file' onChange={(e)=>handleUpload(e.target.files[0])}/>
+                <div>{uploaded ? 
+                  <label htmlFor='file'>
+                    <img src={upload} alt='upload' />
+                    <span>Profile Picture Uploaded</span>
+                  </label>
+                :
+                  <label htmlFor='file'>
                     <img src={upload} alt='upload' />
                     <span>Upload a Profile Picture</span>
-                </label>
+                  </label>
+                }</div>
                 <button>Register</button>
             </form>
             <p>Already have an account? <Link to='/login'>Login</Link></p>
