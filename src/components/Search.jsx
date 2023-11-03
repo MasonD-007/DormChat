@@ -9,7 +9,8 @@ export const Search = () => {
   const {currentUser} = useContext(AuthContext);
 
   const handleSearch = async () => {
-    const q = query(collection(db, "users"), where("displayName", "==", username));
+    username = username.toLowerCase();
+    const q = query(collection(db, "users"), where("displayName".toLowerCase(), "==", username));
 
     try{
     const querySnapshot = await getDocs(q)

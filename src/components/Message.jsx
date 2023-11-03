@@ -14,10 +14,23 @@ export const Message = ({message}) => {
     });
   }
   , [message]);
-  //console.log("The Date: " + message.date.toDate());
-  console.log("The Date2: " + message.date.toDate().toLocaleTimeString());
-  var localTime = message.date.toDate().toLocaleTimeString();
-  console.log("type: " + typeof(localTime));
+
+  var messageDay = message.date.toDate().getDate();
+
+  var messageMonth = message.date.toDate().getMonth();
+  
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var monthName = months[messageMonth];
+
+  const messageDate = monthName + " " + messageDay;
+
+  const nowSeconds = new Date().getSeconds().valueOf();
+  const nowDay = new Date().getDate().valueOf() *24 * 60 * 60;
+
+  const now = nowDay + nowSeconds;
+
+  console.log("Now: " + now)
+  console.log("Message Time: " + ((message.date.toDate().getDate().valueOf() * 24 * 60 * 60) + message.date.toDate().getSeconds().valueOf()))
   return (
     <div ref={ref} className={message.senderId === currentUser.uid 
                   ? "message owner" 
@@ -30,7 +43,10 @@ export const Message = ({message}) => {
                   : data.user.photoURL} 
               alt="" 
             />
-            <span>{message.date.toDate().toLocaleTimeString()}</span>
+            <span>{now - 5 <= (message.date.toDate().getDate().valueOf() * 24 * 60 * 60) + message.date.toDate().getSeconds().valueOf() 
+                  ? "Right Now"
+                  : messageDate
+            }</span>
         </div>
         <div className='messageContent'>
             <p>{message.text}</p>
