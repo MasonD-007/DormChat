@@ -9,14 +9,7 @@ export const Search = () => {
   const {currentUser} = useContext(AuthContext);
 
   const handleSearch = async () => {
-    const q = query(collection(db, "users"), where("displayName", "==", username));
-
-    const q2 = query(collection(db, "users"), and(
-        where('displayName', '===', username),   
-      or(
-        where('uid', '!=', currentUser.uid),
-      )
-    ));
+    const q = query(collection(db, "users"), where("displayName", "==", username), where("uid", "!=", currentUser.uid));
 
     try{
     const querySnapshot = await getDocs(q)
