@@ -54,7 +54,9 @@ export const Chats = () => {
                 <span>{chat[1].userInfo.displayName}</span>
                 <p>{chat[1].lastMessage?.text}</p>
             </div>
-            <button onClick={()=>handleDelete(chat[1].userInfo)}>Delete Chat</button>
+            <div className='userChatDel'>
+              <button onClick={()=>handleDelete(chat[1].userInfo)}>Delete Chat</button>
+            </div>
         </div>
         
         ))}

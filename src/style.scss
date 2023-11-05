@@ -187,17 +187,6 @@
                     object-fit: cover;
                 }
 
-                button {
-                    background-color: #5d5b8d;
-                    right: 0;
-                    left: 100%;
-                    color: #ddddf7;
-                    font-size: 15px;
-                    border: none;
-                    float: right;
-                    cursor: pointer;
-                }
-
                 .userChatInfo {
                     span {
                         font-size: 18px;
@@ -208,6 +197,24 @@
                         font-size: 14px;
                         color: lightgray;
                     }
+                }
+
+                .userChatDel {
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+
+                    button {
+                            background-color: #5d5b8d;
+                            right: 0;
+                            left: 100%;
+                            color: #ddddf7;
+                            font-size: 15px;
+                            border: none;
+                            cursor: pointer;
+                        }
                 }
             }
         }
