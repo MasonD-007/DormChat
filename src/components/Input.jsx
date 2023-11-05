@@ -8,6 +8,8 @@ import { db } from '../firebase';
 import { v4 as uuid } from 'uuid';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { storage } from '../firebase';
+import { AES, enc } from 'crypto-ts';
+
 
 export const Input = () => {
   const [text, setText] = useState('');
@@ -24,6 +26,7 @@ export const Input = () => {
   }
 
   const handleSend = async () => {
+    var ciphertext = AES.encrypt(text,"IloveFrannie").toString();
     if(img){
       const storageRef = ref(storage, 'messagePhotos/'+ uuid());
       uploadBytes(storageRef, img).then(() => {
@@ -31,7 +34,7 @@ export const Input = () => {
           await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
               id: uuid(),
-              text,
+              text: ciphertext,
               img: downloadURL,
               senderId: currentUser.uid,
               date:Timestamp.now(),
@@ -43,7 +46,7 @@ export const Input = () => {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
-          text,
+          text: ciphertext,
           senderId: currentUser.uid,
           date:Timestamp.now(),
         }),
@@ -67,6 +70,7 @@ export const Input = () => {
     setText('');
     setImg(null);
   };
+
   return (
     <div className='input'>
       <input type="text" placeholder='Write a message...' onChange={e=>setText(e.target.value)} value={text} onKeyDown={handleKeySend}/>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
+import { AES, enc } from 'crypto-ts';
 
 export const Message = ({message}) => {
   const {currentUser} = useContext(AuthContext);
@@ -49,7 +50,7 @@ export const Message = ({message}) => {
             }</span>
         </div>
         <div className='messageContent'>
-            <p>{message.text}</p>
+            <p>{AES.decrypt(message.text.toString(),"IloveFrannie").toString(enc.Utf8)}</p>
             <img src={message.img}/>  
         </div>
     </div>

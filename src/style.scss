@@ -207,12 +207,10 @@
                     cursor: pointer;
 
                     button {
-                            background-color: #5d5b8d;
-                            right: 0;
-                            left: 100%;
+                            background-color: transparent;
                             color: #ddddf7;
                             font-size: 15px;
-                            border: none;
+                            border: 0.5px solid #ddddf7;
                             cursor: pointer;
                         }
                 }
