@@ -8,6 +8,7 @@ export const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     const getChats = () => {
@@ -26,6 +27,17 @@ export const Chats = () => {
   const handleSelect = (u) => {
     dispatch({type: "CHANGE_USER", payload: u});
   };
+
+  const handleColor = (l) => {
+    if(l === "light"){
+      setTheme("dark");
+      console.log("Dark");
+    }else{
+      setTheme("light");
+      console.log("Light");
+    }
+
+  }
 
   const handleDelete = (cu) => {
     const combindId = [cu.uid, currentUser.uid].sort().join(':');
@@ -64,6 +76,10 @@ export const Chats = () => {
         </div>
         
         ))}
+
+        <div className='colorButton'>
+          <button onClick={()=>handleColor(theme)}>Change Color</button>
+        </div>
     </div>
   )
 }
