@@ -10,12 +10,6 @@
     }
 }
 
-@mixin laptop {
-    @media screen and (max-width: 1200px) {
-        @content;
-    }
-}
-
 .formContainer {
     background-color: #a7bcff;
     height: 100vh;
@@ -99,6 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 
     .container {
         //border: 1px solid white;
@@ -107,8 +102,6 @@
         height: 99%;
         display: flex;
         overflow: hidden;
-
-        
 
         .sidebar {
             flex: 1;
