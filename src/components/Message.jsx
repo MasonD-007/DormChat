@@ -15,23 +15,9 @@ export const Message = ({message}) => {
     });
   }
   , [message]);
-
-  var messageDay = message.date.toDate().getDate();
-
-  var messageMonth = message.date.toDate().getMonth();
   
   const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  var monthName = months[messageMonth];
 
-  const messageDate = monthName + " " + messageDay;
-
-  const nowSeconds = new Date().getSeconds().valueOf();
-  const nowDay = new Date().getDate().valueOf() *24 * 60 * 60;
-
-  const now = nowDay + nowSeconds;
-
-  //console.log("Now: " + now)
-  //console.log("Message Time: " + ((message.date.toDate().getDate().valueOf() * 24 * 60 * 60) + message.date.toDate().getSeconds().valueOf()))
   return (
     <div ref={ref} className={message.senderId === currentUser.uid 
                   ? "message owner" 
@@ -44,10 +30,7 @@ export const Message = ({message}) => {
                   : data.user.photoURL} 
               alt="" 
             />
-            <span>{now - 5 <= (message.date.toDate().getDate().valueOf() * 24 * 60 * 60) + message.date.toDate().getSeconds().valueOf() 
-                  ? "N/A"
-                  : "N/A"
-            }</span>
+            <span>{months[message.date.toDate().getMonth()]}: {message.date.toDate().getDate()}</span>
         </div>
         <div className='messageContent'>
             <p>{AES.decrypt(message.text.toString(),"IloveFrannie").toString(enc.Utf8)}</p>
