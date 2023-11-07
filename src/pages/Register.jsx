@@ -8,7 +8,7 @@ import { useNavigate, Link } from 'react-router-dom'
 
 export const Register = () => {
   const navigate = useNavigate();
-  const [uploaded, setUploaded] = React.useState(false);
+  const [uploaded, setUploaded] = useState(false);
 
 
   const handleUpload = (file) => {

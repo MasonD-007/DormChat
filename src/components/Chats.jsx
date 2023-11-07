@@ -64,11 +64,11 @@ export const Chats = () => {
             <img src={chat[1].userInfo.photoURL} alt='user' className='userChatImg' />
             <div className='userChatInfo'>
                 <span>{chat[1].userInfo.displayName}</span>
-                {chat[1].lastMessage?.text > 15 ? (
+                {chat[1].lastMessage?.text > 15 ?
                   <p>{chat[1].lastMessage?.text}</p>
-                ) : (
+                :
                   <p>{chat[1].lastMessage?.text.substring(0,15)} . . . </p>
-                )}
+                }
             </div>
             <div className='userChatDel'>
               <button onClick={()=>handleDelete(chat[1].userInfo)}>Delete Chat</button>

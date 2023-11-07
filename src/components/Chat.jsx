@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Cam from "../img/cam.png";
 import Add from "../img/add.png";
 import More from "../img/more.png";
@@ -9,9 +9,12 @@ import { ChatContext } from "../context/ChatContext";
 
 export const Chat = () => {
   const { data } = useContext(ChatContext);
+  const [user, setUser] = useState(false);
 
-  const handleSelectedUser = () => {
-    console.log("Selected User");
+  const handleUser = () => {
+    if (data.user.displayName !== undefined) {
+      setUser(true);
+    }
   }
 
   const handleMore = () => {
@@ -19,11 +22,10 @@ export const Chat = () => {
   }
 
   return (
-    <div className="chat">
+    <div className="chat" onLoad={handleUser}>
       <div className="chatInfo">
-        { data.user?.photoURL === null
-        ? <span>Click on a chat to start talking</span>
-        : <>
+        { user ? 
+        <>
           <img src={data.user?.photoURL} alt="" />
           <span>{data.user?.displayName}</span>
           <div className="chatIcons">
@@ -34,6 +36,8 @@ export const Chat = () => {
             </button>
           </div>
         </>
+        : 
+        <span>Click on a chat to start talking</span>
         }
       </div>
       <Messages />
