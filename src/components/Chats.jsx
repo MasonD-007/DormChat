@@ -3,12 +3,51 @@ import React, {useEffect, useState, useContext} from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { db } from '../firebase';
 import { ChatContext } from '../context/ChatContext';
+import { ThemeContext, lightTheme, darkTheme } from '../context/ThemeContext';
 
 export const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-  const [theme, setTheme] = useState("light");
+  const {theme} = useContext(ThemeContext);
+
+  useEffect(() => {
+    const background = document.querySelectorAll('.chats, .sidebar');
+    if (theme === 'light') {
+      background.forEach(element => {
+        element.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
+      });
+    } else {
+      background.forEach(element => {
+        element.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
+      });
+    }
+    const text = document.querySelectorAll('.chats .userChatInfo span, .chats .userChatInfo p');
+    if (theme === 'light') {
+      text.forEach(element => {
+        element.style.color = lightTheme.TextColor.valueOf();
+      });
+    } else {
+      text.forEach(element => {
+        element.style.color = darkTheme.TextColor.valueOf();
+      });
+    }
+    const button = document.querySelectorAll('.chats .userChatDel button');
+    if (theme === 'light') {
+      button.forEach(element => {
+        element.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
+        element.style.color = lightTheme.TextColor.valueOf();
+        element.style.border = '1px solid ' + lightTheme.TextColor.valueOf();
+      });
+    } else {
+      button.forEach(element => {
+        element.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
+        element.style.color = darkTheme.TextColor.valueOf();
+        element.style.border = '1px solid ' + darkTheme.TextColor.valueOf();
+      });
+    }
+  }, [theme]);
+
 
   useEffect(() => {
     const getChats = () => {
