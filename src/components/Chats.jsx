@@ -28,17 +28,6 @@ export const Chats = () => {
     dispatch({type: "CHANGE_USER", payload: u});
   };
 
-  const handleColor = (l) => {
-    if(l === "light"){
-      setTheme("dark");
-      console.log("Dark");
-    }else{
-      setTheme("light");
-      console.log("Light");
-    }
-
-  }
-
   const handleDelete = (cu) => {
     const combindId = [cu.uid, currentUser.uid].sort().join(':');
 
@@ -64,10 +53,10 @@ export const Chats = () => {
             <img src={chat[1].userInfo.photoURL} alt='user' className='userChatImg' />
             <div className='userChatInfo'>
                 <span>{chat[1].userInfo.displayName}</span>
-                {chat[1].lastMessage?.text > 15 ?
-                  <p>{chat[1].lastMessage?.text}</p>
-                :
-                  <p>{chat[1].lastMessage?.text.substring(0,15)} . . . </p>
+                {chat[1].lastMessage?.text.length > 25 ?
+                  <p>{chat[1].lastMessage?.text.charAt(0).toUpperCase() + chat[1].lastMessage?.text.substring(1,25)} . . . </p>
+                  :
+                  <p>{chat[1].lastMessage?.text.charAt(0).toUpperCase() + chat[1].lastMessage?.text.slice(1)}</p>
                 }
             </div>
             <div className='userChatDel'>
