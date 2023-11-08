@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Attach from '../img/attach.png'
 import Img from '../img/img.png'
 import { ChatContext } from '../context/ChatContext';
@@ -9,11 +9,23 @@ import { v4 as uuid } from 'uuid';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { storage } from '../firebase';
 import { AES, enc } from 'crypto-ts';
-
+import { ThemeContext,lightTheme,darkTheme } from '../context/ThemeContext';
 
 export const Input = () => {
   const [text, setText] = useState('');
   const [img, setImg] = useState(null);
+  const {theme} = useContext(ThemeContext);
+
+  useEffect(() => {
+    const button = document.querySelector('.input .send button');
+    if(theme === 'light'){
+      button.style.backgroundColor = lightTheme.SecondaryColor;
+      button.style.color = lightTheme.TextColor;
+    } else {
+      button.style.backgroundColor = darkTheme.SecondaryColor;
+      button.style.color = darkTheme.TextColor;
+    }
+  }, [theme])
 
 
   const {currentUser} = useContext(AuthContext);
