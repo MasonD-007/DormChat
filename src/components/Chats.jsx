@@ -27,6 +27,7 @@ export const Chats = () => {
         element.style.color = lightTheme.TextColor.valueOf();
         element.style.border = '1px solid ' + lightTheme.TextColor.valueOf();
       });
+      
     } else {
       background.forEach(element => {
         element.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
