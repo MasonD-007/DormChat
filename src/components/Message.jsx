@@ -33,7 +33,7 @@ export const Message = ({message}) => {
             <span>{months[message.date.toDate().getMonth()]}: {message.date.toDate().getDate()}</span>
         </div>
         <div className='messageContent'>
-            <p>{AES.decrypt(message.text.toString(),"IloveFrannie").toString(enc.Utf8)}</p>
+            <p>{AES.decrypt(message.text.toString(),"IloveFrannie").toString(enc.Utf8).charAt(0).toUpperCase() + AES.decrypt(message.text.toString(),"IloveFrannie").toString(enc.Utf8).slice(1)}</p>
             <img src={message.img}/>  
         </div>
     </div>

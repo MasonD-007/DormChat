@@ -37,7 +37,7 @@ export const Chat = () => {
           </div>
         </>
         : 
-        <span>Click on a chat to start talking</span>
+        <span>Click on a chat to start texting</span>
         }
       </div>
       <Messages />
