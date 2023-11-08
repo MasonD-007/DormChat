@@ -140,6 +140,18 @@
                         border: none;
                         cursor: pointer;
                     }
+
+                    .themeButton {
+                        background-color: transparent;
+                        border: none;
+                        cursor: pointer;
+
+                        button {
+                            background-color: transparent;
+                            color: none;
+                            cursor: pointer;
+                        }
+                    }
                 }
             }
 

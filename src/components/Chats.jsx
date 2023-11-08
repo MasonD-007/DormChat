@@ -74,12 +74,7 @@ export const Chats = () => {
               <button onClick={()=>handleDelete(chat[1].userInfo)}>Delete Chat</button>
             </div>
         </div>
-        
         ))}
-
-        <div className='colorButton'>
-          <button onClick={()=>handleColor(theme)}>Change Color</button>
-        </div>
     </div>
   )
 }
