@@ -1,12 +1,28 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {collection, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc, updateDoc, and, or} from 'firebase/firestore'
 import { db } from '../firebase'
 import { AuthContext } from '../context/AuthContext'
+import { ThemeContext, lightTheme,darkTheme } from '../context/ThemeContext'
 
 export const Search = () => {
   const [username, setUsername] = useState('');
   const [user, setUser] = useState(null);
   const {currentUser} = useContext(AuthContext);
+  const {theme} = useContext(ThemeContext);
+
+  useEffect(() => {
+    const background = document.querySelector('.search');
+    const text = document.querySelector('.search .searchForm input');
+    if (theme === 'light') {
+      background.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
+      text.style.color = lightTheme.TextColor.valueOf();
+      document.querySelector('input[type=text]').style.setProperty("--c", lightTheme.TextColor.valueOf());
+    } else {
+      background.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
+      text.style.color = darkTheme.TextColor.valueOf();
+      document.querySelector('input[type=text]').style.setProperty("--c", darkTheme.TextColor.valueOf());
+    }
+  }, [theme]);
 
   const handleSearch = async () => {
     const q = query(collection(db, "users"), where("displayName", "==", username), where("uid", "!=", currentUser.uid));
