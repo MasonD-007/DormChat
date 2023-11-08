@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Cam from "../img/cam.png";
 import Add from "../img/add.png";
 import More from "../img/more.png";
@@ -6,10 +6,24 @@ import { Messages } from "./Messages";
 import { Input } from "./Input";
 import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
+import { ThemeContext,lightTheme,darkTheme } from "../context/ThemeContext";
 
 export const Chat = () => {
   const { data } = useContext(ChatContext);
   const [user, setUser] = useState(false);
+  const {theme} = useContext(ThemeContext);
+
+  useEffect(() => {
+    const background = document.querySelector('.chat .chatInfo');
+    const text = document.querySelector('.chat .chatInfo span');
+    if (theme === 'light') {
+      background.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
+      text.style.color = lightTheme.TextColor.valueOf();
+    } else {
+      background.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
+      text.style.color = darkTheme.TextColor.valueOf();
+    }
+  }, [theme]);
 
   const handleUser = () => {
     if (data.user.displayName !== undefined) {
