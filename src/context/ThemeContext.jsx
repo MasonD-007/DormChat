@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 export const ThemeContext = React.createContext();
 
+export const lightTheme = {"BackgroundColor": "#F5F5F5", "SecondaryColor": "#B2D8D8", "TextColor": "#333"}
+export const darkTheme = {"BackgroundColor": "#333", "SecondaryColor": "#1A1A2E", "TextColor": "#F5F5F5"}
+
 export function ThemeProvider(props) {
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState('dark');
 
     useEffect(() => {
-        const body = document.querySelector('.home');
+        const background = document.querySelector('.home');
         if (theme === 'light') {
-            body.style.backgroundColor = '#333';
-            body.style.color = '#f5f5f5';
+            background.style.backgroundColor = lightTheme.BackgroundColor.valueOf();
         } else {
-            body.style.backgroundColor = '#f5f5f5';
-            body.style.color = '#333';
+            background.style.backgroundColor = darkTheme.BackgroundColor.valueOf();
         }
     }
     , [theme]);
