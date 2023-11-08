@@ -13,33 +13,27 @@ export const Chats = () => {
 
   useEffect(() => {
     const background = document.querySelectorAll('.chats, .sidebar');
+    const text = document.querySelectorAll('.chats .userChatInfo span, .chats .userChatInfo p');
+    const button = document.querySelectorAll('.chats .userChatDel button');
     if (theme === 'light') {
       background.forEach(element => {
         element.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
       });
-    } else {
-      background.forEach(element => {
-        element.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
-      });
-    }
-    const text = document.querySelectorAll('.chats .userChatInfo span, .chats .userChatInfo p');
-    if (theme === 'light') {
       text.forEach(element => {
         element.style.color = lightTheme.TextColor.valueOf();
       });
-    } else {
-      text.forEach(element => {
-        element.style.color = darkTheme.TextColor.valueOf();
-      });
-    }
-    const button = document.querySelectorAll('.chats .userChatDel button');
-    if (theme === 'light') {
       button.forEach(element => {
         element.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
         element.style.color = lightTheme.TextColor.valueOf();
         element.style.border = '1px solid ' + lightTheme.TextColor.valueOf();
       });
     } else {
+      background.forEach(element => {
+        element.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
+      });
+      text.forEach(element => {
+        element.style.color = darkTheme.TextColor.valueOf();
+      });
       button.forEach(element => {
         element.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
         element.style.color = darkTheme.TextColor.valueOf();
