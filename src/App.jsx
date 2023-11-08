@@ -5,6 +5,7 @@ import { Register } from "./pages/Register";
 import './style.scss';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthContext } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
 
@@ -21,15 +22,17 @@ function App() {
   return (
       <>
       <Router>
-        <Routes path='/'>
-          <Route index element={
-          <ProtectedRoute>
-            <Homepage />
-          </ProtectedRoute>
-          } />
-          <Route path='login' element={<Login />} />
-          <Route path='register' element={<Register />} />
-        </Routes>
+        <ThemeProvider>
+          <Routes path='/'>
+            <Route index element={
+            <ProtectedRoute>
+              <Homepage />
+            </ProtectedRoute>
+            } />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Routes>
+        </ThemeProvider>
       </Router>
       </>
   )
