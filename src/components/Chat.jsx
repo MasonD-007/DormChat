@@ -7,11 +7,13 @@ import { Input } from "./Input";
 import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { ThemeContext,lightTheme,darkTheme } from "../context/ThemeContext";
+import { Menu } from "./Menu";
 
 export const Chat = () => {
   const { data } = useContext(ChatContext);
   const [user, setUser] = useState(false);
   const {theme} = useContext(ThemeContext);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const background = document.querySelector('.chat .chatInfo');
@@ -40,6 +42,8 @@ export const Chat = () => {
 
   const handleMore = () => {
     console.log("More");
+    console.log(isOpen);
+    setIsOpen(!isOpen);
   }
 
   return (
@@ -55,6 +59,7 @@ export const Chat = () => {
             <button onClick={handleMore}>
               <img id="InversePhoto" src={More} alt="" />
             </button>
+            {isOpen ? <Menu /> : null}
           </div>
         </>
         : 
