@@ -16,7 +16,7 @@ export const Chat = () => {
   useEffect(() => {
     const background = document.querySelector('.chat .chatInfo');
     const text = document.querySelector('.chat .chatInfo span');
-    const img = document.querySelectorAll('.chat .chatInfo img');
+    const img = document.querySelectorAll('.chat .chatInfo .chatIcons img');
     if (theme === 'light') {
       background.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
       text.style.color = lightTheme.TextColor.valueOf();
