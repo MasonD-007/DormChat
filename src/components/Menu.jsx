@@ -17,7 +17,7 @@ export const Menu = () => {
 
   function DropdownItem(props) {
     return (
-      <a href="#" className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+      <a className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
         <span className="icon-button">{props.leftIcon}</span>
         {props.children}
         <span className="icon-right">{props.rightIcon}</span>
@@ -59,10 +59,10 @@ export const Menu = () => {
           <DropdownItem goToMenu="main">
             <h2>My Tutorial</h2>
           </DropdownItem>
-          <DropdownItem>HTML</DropdownItem>
-          <DropdownItem>CSS</DropdownItem>
-          <DropdownItem>JavaScript</DropdownItem>
-          <DropdownItem>Awesome!</DropdownItem>
+          <DropdownItem>Theme</DropdownItem>
+          <DropdownItem>Block</DropdownItem>
+          <DropdownItem>SignOut</DropdownItem>
+          <DropdownItem>Banana</DropdownItem>
         </div>
       </CSSTransition>
 
@@ -76,10 +76,10 @@ export const Menu = () => {
           <DropdownItem goToMenu="main">
             <h2>Animals</h2>
           </DropdownItem>
-          <DropdownItem Icon="🦘">Kangaroo</DropdownItem>
-          <DropdownItem Icon="🐸">Frog</DropdownItem>
-          <DropdownItem Icon="🦋">Horse?</DropdownItem>
-          <DropdownItem Icon="🦔">Hedgehog</DropdownItem>
+          <DropdownItem leftIcon="🦘">Kangaroo</DropdownItem>
+          <DropdownItem leftIcon="🐸">Frog</DropdownItem>
+          <DropdownItem leftIcon="🦋">Horse?</DropdownItem>
+          <DropdownItem leftIcon="🦔">Hedgehog</DropdownItem>
         </div>
       </CSSTransition>
     </div>

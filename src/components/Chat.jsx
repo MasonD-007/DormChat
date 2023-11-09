@@ -41,8 +41,6 @@ export const Chat = () => {
   }
 
   const handleMore = () => {
-    console.log("More");
-    console.log(isOpen);
     setIsOpen(!isOpen);
   }
 
