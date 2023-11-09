@@ -16,12 +16,19 @@ export const Chat = () => {
   useEffect(() => {
     const background = document.querySelector('.chat .chatInfo');
     const text = document.querySelector('.chat .chatInfo span');
+    const img = document.querySelectorAll('.chat .chatInfo img');
     if (theme === 'light') {
       background.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
       text.style.color = lightTheme.TextColor.valueOf();
+      img.forEach(element => {
+        element.style.filter = 'invert(100%)';
+      });
     } else {
       background.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
       text.style.color = darkTheme.TextColor.valueOf();
+      img.forEach(element => {
+        element.style.filter = 'invert(0%)';
+      });
     }
   }, [theme]);
 
@@ -43,10 +50,10 @@ export const Chat = () => {
           <img src={data.user?.photoURL} alt="" />
           <span>{data.user?.displayName}</span>
           <div className="chatIcons">
-            <img src={Cam} alt="" />
-            <img src={Add} alt="" />
+            <img id="InversePhoto" src={Cam} alt="" />
+            <img id="InversePhoto" src={Add} alt="" />
             <button onClick={handleMore}>
-              <img src={More} alt="" />
+              <img id="InversePhoto" src={More} alt="" />
             </button>
           </div>
         </>

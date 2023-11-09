@@ -20,7 +20,6 @@ export const Navbar = () => {
       });
       button.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
       button.style.color = lightTheme.TextColor.valueOf();
-      button.style.border = '1px solid ' + lightTheme.TextColor.valueOf();
       img.forEach(element => {
         element.style.backgroundColor = lightTheme.SecondaryColor.valueOf();
       });
@@ -31,7 +30,6 @@ export const Navbar = () => {
       });
       button.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
       button.style.color = darkTheme.TextColor.valueOf();
-      button.style.border = '1px solid ' + darkTheme.TextColor.valueOf();
       img.forEach(element => {
         element.style.backgroundColor = darkTheme.SecondaryColor.valueOf();
       });    }
