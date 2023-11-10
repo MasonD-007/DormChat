@@ -14,38 +14,9 @@ export const Menu = () => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-      setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
-  }, [])
-
-  useEffect(() => {
-      const background = document.querySelector('.dropdown');
-      const text = document.querySelectorAll('.dropdown .menu .menu-item');
-      const img = document.querySelectorAll('.dropdown .menu .menu-item .icon-button');
-      const button = document.querySelectorAll('.dropdown .menu .menu-item button');
-      if (theme === 'light') {
-        background.style.backgroundColor = lightTheme.BackgroundColor.valueOf();
-        text.forEach(element => {
-          element.style.color = lightTheme.TextColor.valueOf();
-        });
-        img.forEach(element => {
-          element.style.filter = 'invert(100%)';
-        });
-        button.forEach(element => {
-          element.style.color = lightTheme.TextColor.valueOf();
-        });
-      } else {
-        background.style.backgroundColor = darkTheme.BackgroundColor.valueOf();
-        text.forEach(element => {
-          element.style.color = darkTheme.TextColor.valueOf();
-        });
-        img.forEach(element => {
-          element.style.filter = 'invert(0%)';
-        });
-        button.forEach(element => {
-          element.style.color = darkTheme.TextColor.valueOf();
-        });
-      }
-  }, [theme]);
+    handleLoadTheme();
+    setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
+  })
 
   const calcHeight = (el) => {
       const height = el.offsetHeight;
@@ -65,14 +36,14 @@ export const Menu = () => {
   const handleLoadTheme = () => {
     const background = document.querySelector('.dropdown');
     const text = document.querySelectorAll('.dropdown .menu .menu-item');
-    const img = document.querySelectorAll('.dropdown .menu .menu-item .icon-button');
+    const icon = document.querySelectorAll('.dropdown .menu .menu-item .icon-button');
     const button = document.querySelectorAll('.dropdown .menu .menu-item button');
     if (theme === 'light') {
       background.style.backgroundColor = lightTheme.BackgroundColor.valueOf();
       text.forEach(element => {
         element.style.color = lightTheme.TextColor.valueOf();
       });
-      img.forEach(element => {
+      icon.forEach(element => {
         element.style.filter = 'invert(100%)';
       });
       button.forEach(element => {
@@ -83,7 +54,7 @@ export const Menu = () => {
       text.forEach(element => {
         element.style.color = darkTheme.TextColor.valueOf();
       });
-      img.forEach(element => {
+      icon.forEach(element => {
         element.style.filter = 'invert(0%)';
       });
       button.forEach(element => {
@@ -113,17 +84,17 @@ export const Menu = () => {
               MY PROFILE
             </button>
           </DropdownItem>
-            <DropdownItem
-              leftIcon={theme !== "dark" 
-                ? <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png"/> 
-                : <img src="https://img.icons8.com/ios-filled/50/ffffff/sun.png"/>}
-            >
-              <button onClick={toggleTheme}>
-                {theme === "light" ? "DARK MODE" : "LIGHT MODE"}
-              </button>
-            </DropdownItem>
           <DropdownItem
-            leftIcon={<img src={LogOut} />}>
+            leftIcon={theme !== "dark" 
+              ? <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png"/> 
+              : <img src="https://img.icons8.com/ios-filled/50/ffffff/sun.png"/>}
+          >
+            <button onClick={toggleTheme}>
+              {theme === "light" ? "DARK MODE" : "LIGHT MODE"}
+            </button>
+          </DropdownItem>
+          <DropdownItem
+            leftIcon={<img src={LogOut} id='InverseImage'/>}>
             <button onClick={()=> signOut(auth)}>
               LOGOUT
             </button>

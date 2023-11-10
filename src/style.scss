@@ -395,8 +395,7 @@
     position: absolute;
     top: 58px;
     width: 300px;
-    transform: translateX(-75%);
-    //background-color: var(--bg);
+    transform: translateX(-90%);
     border: var(--border);
     border-radius: var(--border-radius);
     padding: 1rem;
@@ -410,6 +409,10 @@
             text-align: center;
         }
 
+        img {
+            width: 32px;
+        }
+
         .menu-item {
             height: 50px;
             display: flex;
@@ -420,6 +423,7 @@
 
             .icon-button {
                 margin-right: 0.5rem;
+
             }
 
             .icon-button:hover {
@@ -437,41 +441,3 @@
     }
 }
 
-/* CSSTransition classes  */
-.menu-primary-enter {
-    position: absolute;
-    transform: translateX(-110%);
-}
-
-.menu-primary-enter-active {
-    transform: translateX(0%);
-    transition: all var(--speed) ease;
-}
-
-.menu-primary-exit {
-    position: absolute;
-}
-
-.menu-primary-exit-active {
-    transform: translateX(-110%);
-    transition: all var(--speed) ease;
-}
-
-
-.menu-secondary-enter {
-    transform: translateX(110%);
-}
-
-.menu-secondary-enter-active {
-    transform: translateX(0%);
-    transition: all var(--speed) ease;
-}
-
-.menu-secondary-exit {
-    position: none;
-}
-
-.menu-secondary-exit-active {
-    transform: translateX(110%);
-    transition: all var(--speed) ease;
-}
