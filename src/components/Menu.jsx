@@ -1,14 +1,32 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { ThemeContext,lightTheme,darkTheme } from '../context/ThemeContext';
 
 export const Menu = () => {
     const [activeMenu, setActiveMenu] = useState('main');
     const [menuHeight, setMenuHeight] = useState(null);
+    const {theme} = useContext(ThemeContext);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
         setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
     }, [])
+
+    useEffect(() => {
+        const background = document.querySelector('.dropdown');
+        const text = document.querySelectorAll('.dropdown .menu .menu-item');
+        if (theme === 'light') {
+          background.style.backgroundColor = lightTheme.BackgroundColor.valueOf();
+          text.forEach(element => {
+            element.style.color = lightTheme.TextColor.valueOf();
+          });
+        } else {
+          background.style.backgroundColor = darkTheme.BackgroundColor.valueOf();
+          text.forEach(element => {
+            element.style.color = darkTheme.TextColor.valueOf();
+          });
+        }
+    }, [theme]);
 
     function calcHeight(el) {
         const height = el.offsetHeight;
@@ -26,60 +44,33 @@ export const Menu = () => {
   }
 
   return (
-    <div className="dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
+    <div className="dropdown" style={{ height: menuHeight}} ref={dropdownRef} >
 
       <CSSTransition
         in={activeMenu === 'main'}
         timeout={500}
         classNames="menu-primary"
         unmountOnExit
-        onEnter={calcHeight}>
+        onEnter={calcHeight}
+        style={{borderRadius: "10px 10px 10px 10px", transform: "translateX(-20px)"}}
+        >
         <div className="menu">
           <DropdownItem>My Profile</DropdownItem>
           <DropdownItem
-            goToMenu="settings">
-            Settings
+            leftIcon={theme !== "dark" 
+            ? 
+            <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png"/> 
+            : 
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/sun.png"/>}
+          >
+
+            {theme === "light" ? "Dark Mode" : "Light Mode"}
           </DropdownItem>
           <DropdownItem
-            leftIcon="🦧"
-            goToMenu="animals">
-            Animals
+            leftIcon="🦧">
+            LOGOUT
           </DropdownItem>
 
-        </div>
-      </CSSTransition>
-
-      <CSSTransition
-        in={activeMenu === 'settings'}
-        timeout={500}
-        classNames="menu-secondary"
-        unmountOnExit
-        onEnter={calcHeight}>
-        <div className="menu">
-          <DropdownItem goToMenu="main">
-            <h2>My Tutorial</h2>
-          </DropdownItem>
-          <DropdownItem>Theme</DropdownItem>
-          <DropdownItem>Block</DropdownItem>
-          <DropdownItem>SignOut</DropdownItem>
-          <DropdownItem>Banana</DropdownItem>
-        </div>
-      </CSSTransition>
-
-      <CSSTransition
-        in={activeMenu === 'animals'}
-        timeout={500}
-        classNames="menu-secondary"
-        unmountOnExit
-        onEnter={calcHeight}>
-        <div className="menu">
-          <DropdownItem goToMenu="main">
-            <h2>Animals</h2>
-          </DropdownItem>
-          <DropdownItem leftIcon="🦘">Kangaroo</DropdownItem>
-          <DropdownItem leftIcon="🐸">Frog</DropdownItem>
-          <DropdownItem leftIcon="🦋">Horse?</DropdownItem>
-          <DropdownItem leftIcon="🦔">Hedgehog</DropdownItem>
         </div>
       </CSSTransition>
     </div>

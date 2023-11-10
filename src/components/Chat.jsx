@@ -61,7 +61,15 @@ export const Chat = () => {
           </div>
         </>
         : 
+        <>
         <span>Click on a chat to start texting</span>
+        <div className="chatIcons">
+          <button onClick={handleMore}>
+            <img id="InversePhoto" src={More} alt="" />
+          </button>
+          {isOpen ? <Menu /> : null}
+        </div>
+        </>
         }
       </div>
       <Messages />
