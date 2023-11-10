@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { ThemeContext,lightTheme,darkTheme } from '../context/ThemeContext';
 import { signOut } from 'firebase/auth';
@@ -9,6 +10,7 @@ export const Menu = () => {
   const [activeMenu, setActiveMenu] = useState('main');
   const [menuHeight, setMenuHeight] = useState(null);
   const {theme, toggleTheme} = useContext(ThemeContext);
+  const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -90,6 +92,10 @@ export const Menu = () => {
     }
   }
 
+  const handleMyProfile = () => {
+    navigate('/profile');
+  }
+
   return (
     <div className="dropdown" style={{ height: menuHeight, borderRadius: "10px 10px 10px 10px"}} ref={dropdownRef} onLoad={handleLoadTheme} >
 
@@ -102,7 +108,11 @@ export const Menu = () => {
         style={{transform: "translateX(-20px)"}}
         >
         <div className="menu">
-          <DropdownItem>My Profile</DropdownItem>
+          <DropdownItem>
+            <button onClick={handleMyProfile}>
+              MY PROFILE
+            </button>
+          </DropdownItem>
             <DropdownItem
               leftIcon={theme !== "dark" 
                 ? <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png"/> 

@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from "react";
-import Cam from "../img/cam.png";
 import Add from "../img/add.png";
 import More from "../img/more.png";
 import { Messages } from "./Messages";
@@ -52,7 +51,6 @@ export const Chat = () => {
           <img src={data.user?.photoURL} alt="" />
           <span>{data.user?.displayName}</span>
           <div className="chatIcons">
-            <img id="InversePhoto" src={Cam} alt="" />
             <img id="InversePhoto" src={Add} alt="" />
             <button onClick={handleMore}>
               <img id="InversePhoto" src={More} alt="" />
