@@ -141,6 +141,13 @@
                         cursor: pointer;
                     }
 
+                    span {
+                        position: relative;
+                        font-size: 15px;
+                        font-weight: 500;
+                        transform: translateY(5px);
+                    }
+
                     .themeButton {
                         background-color: transparent;
                         border: none;
