@@ -91,7 +91,8 @@ export const Search = () => {
             placeholder='Find a User' 
             onKeyDown={handleKey} 
             onChange={e=>setUsername(e.target.value)}
-            value={username}/>
+            value={username}
+            size={100}/>
         </div>
         {user && <div className='userChat' onClick={handleSelect}>
             <img src={user.photoURL} alt='user' className='userChatImg' />
