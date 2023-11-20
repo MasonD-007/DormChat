@@ -8,7 +8,7 @@ export const Message = ({message}) => {
   const {currentUser} = useContext(AuthContext);
   const {data} = useContext(ChatContext);
   const {theme} = useContext(ThemeContext);
-/*
+
   useEffect(() => {
     const messages = document.querySelector('.messages');
     const messageInfo = document.querySelectorAll('.message .messageInfo');
@@ -17,6 +17,7 @@ export const Message = ({message}) => {
     const messageContentImg = document.querySelectorAll('.message .messageContent img');
     if(theme === 'light'){
       messages.style.backgroundColor = lightTheme.SecondaryColor;
+      
       messageInfo.forEach(element => {
         element.style.color = lightTheme.TextColor;
       });
@@ -24,7 +25,7 @@ export const Message = ({message}) => {
         element.style.color = lightTheme.TextColor;
       });
       messageContentP.forEach(element => {
-        element.style.backgroundColor = lightTheme.SecondaryColor;
+        element.style.backgroundColor = lightTheme.BackgroundColor;
       });
       messageContentImg.forEach(element => {
         element.style.backgroundColor = lightTheme.SecondaryColor;
@@ -38,13 +39,13 @@ export const Message = ({message}) => {
         element.style.color = darkTheme.TextColor;
       });
       messageContentP.forEach(element => {
-        element.style.backgroundColor = darkTheme.SecondaryColor;
+        element.style.backgroundColor = darkTheme.BackgroundColor;
       });
       messageContentImg.forEach(element => {
         element.style.backgroundColor = darkTheme.SecondaryColor;
       });
     }
-  }, [theme]);*/
+  }, [theme]);
 
   const ref = useRef();
 
