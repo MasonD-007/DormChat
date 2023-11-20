@@ -423,6 +423,10 @@
 
             .icon-button {
                 margin-right: 0.5rem;
+                
+                #InverseImage {
+                    filter: invert(100%);
+                }
 
             }
 

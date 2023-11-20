@@ -38,6 +38,7 @@ export const Menu = () => {
     const text = document.querySelectorAll('.dropdown .menu .menu-item');
     const icon = document.querySelectorAll('.dropdown .menu .menu-item .icon-button');
     const button = document.querySelectorAll('.dropdown .menu .menu-item button');
+    const iconButton = document.querySelectorAll('.dropdown .menu .menu-item .icon-button #InverseImage');
     if (theme === 'light') {
       background.style.backgroundColor = lightTheme.BackgroundColor.valueOf();
       text.forEach(element => {
@@ -49,6 +50,9 @@ export const Menu = () => {
       button.forEach(element => {
         element.style.color = lightTheme.TextColor.valueOf();
       });
+      iconButton.forEach(element => {
+        element.style.filter = 'invert(100%)';
+      });
     } else {
       background.style.backgroundColor = darkTheme.BackgroundColor.valueOf();
       text.forEach(element => {
@@ -59,6 +63,9 @@ export const Menu = () => {
       });
       button.forEach(element => {
         element.style.color = darkTheme.TextColor.valueOf();
+      });
+      iconButton.forEach(element => {
+        element.style.filter = 'invert(100%)';
       });
     }
   }
@@ -94,7 +101,10 @@ export const Menu = () => {
             </button>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<img src={LogOut} id='InverseImage'/>}>
+            leftIcon={theme !== "dark"
+            ? <img src={LogOut} id='InverseImage'/>
+            : <img src={LogOut} id='InverseImage'/>
+            }>
             <button onClick={()=> signOut(auth)}>
               LOGOUT
             </button>
