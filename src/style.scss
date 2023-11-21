@@ -1,14 +1,3 @@
-@mixin mobile {
-    @media screen and (max-width: 480px) {
-        @content;
-    }
-}
-
-@mixin tablet {
-    @media screen and (max-width: 768px) {
-        @content;
-    }
-}
 
 .formContainer {
     background-color: #a7bcff;
@@ -425,7 +414,11 @@
                 margin-right: 0.5rem;
                 
                 #InverseImage {
-                    filter: invert(100%);
+                    filter: invert(0%);
+                }
+
+                #moon {
+                    filter: invert(0%);
                 }
 
             }

@@ -38,6 +38,7 @@ export const Menu = () => {
     const text = document.querySelectorAll('.dropdown .menu .menu-item');
     const icon = document.querySelectorAll('.dropdown .menu .menu-item .icon-button');
     const button = document.querySelectorAll('.dropdown .menu .menu-item button');
+    const moonicon = document.querySelectorAll('.dropdown .menu .menu-item .icon-button #moon');
     const iconButton = document.querySelectorAll('.dropdown .menu .menu-item .icon-button #InverseImage');
     if (theme === 'light') {
       background.style.backgroundColor = lightTheme.BackgroundColor.valueOf();
@@ -46,6 +47,9 @@ export const Menu = () => {
       });
       icon.forEach(element => {
         element.style.filter = 'invert(100%)';
+      });
+      moonicon.forEach(element => {
+        element.style.filter = 'invert(0%)';
       });
       button.forEach(element => {
         element.style.color = lightTheme.TextColor.valueOf();
@@ -57,9 +61,6 @@ export const Menu = () => {
       background.style.backgroundColor = darkTheme.BackgroundColor.valueOf();
       text.forEach(element => {
         element.style.color = darkTheme.TextColor.valueOf();
-      });
-      icon.forEach(element => {
-        element.style.filter = 'invert(0%)';
       });
       button.forEach(element => {
         element.style.color = darkTheme.TextColor.valueOf();
@@ -93,7 +94,7 @@ export const Menu = () => {
           </DropdownItem>
           <DropdownItem
             leftIcon={theme !== "dark" 
-              ? <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png"/> 
+              ? <img id='moon' src="https://img.icons8.com/ios-filled/50/ffffff/moon-symbol.png"/> 
               : <img src="https://img.icons8.com/ios-filled/50/ffffff/sun.png"/>}
           >
             <button onClick={toggleTheme}>

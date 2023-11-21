@@ -12,7 +12,8 @@ export const Message = ({message}) => {
   useEffect(() => {
     const messages = document.querySelector('.messages');
     const messageInfo = document.querySelectorAll('.message .messageInfo');
-    const messageContent = document.querySelectorAll('.message .messageContent');
+    const guestMessageContent = document.querySelectorAll('.message .messageContent');
+    const ownerMessageContent = document.querySelectorAll('.message .owner .messageContent');
     const messageContentP = document.querySelectorAll('.message .messageContent p');
     const messageContentImg = document.querySelectorAll('.message .messageContent img');
     if(theme === 'light'){
@@ -21,7 +22,10 @@ export const Message = ({message}) => {
       messageInfo.forEach(element => {
         element.style.color = lightTheme.TextColor;
       });
-      messageContent.forEach(element => {
+      guestMessageContent.forEach(element => {
+        element.style.color = lightTheme.TextColor;
+      });
+      ownerMessageContent.forEach(element => {
         element.style.color = lightTheme.TextColor;
       });
       messageContentP.forEach(element => {
@@ -35,7 +39,10 @@ export const Message = ({message}) => {
       messageInfo.forEach(element => {
         element.style.color = darkTheme.TextColor;
       });
-      messageContent.forEach(element => {
+      guestMessageContent.forEach(element => {
+        element.style.color = darkTheme.TextColor;
+      });
+      ownerMessageContent.forEach(element => {
         element.style.color = darkTheme.TextColor;
       });
       messageContentP.forEach(element => {
