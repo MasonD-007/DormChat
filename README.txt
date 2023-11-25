@@ -1,1 +1,1 @@
-Helpful Link: https://stackoverflow.com/questions/41972511/firebase-storage-put-could-not-get-object
+Connect the storage from firebase to the deployed app
