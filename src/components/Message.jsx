@@ -13,7 +13,7 @@ export const Message = ({message}) => {
     const messages = document.querySelector('.messages');
     const messageInfo = document.querySelectorAll('.message .messageInfo');
     const guestMessageContent = document.querySelectorAll('.message .messageContent');
-    const ownerMessageContent = document.querySelectorAll('.message .owner .messageContent');
+    const ownerMessageContent = document.querySelectorAll('.message owner .messageContent p');
     const messageContentP = document.querySelectorAll('.message .messageContent p');
     const messageContentImg = document.querySelectorAll('.message .messageContent img');
     if(theme === 'light'){
@@ -26,7 +26,7 @@ export const Message = ({message}) => {
         element.style.color = lightTheme.TextColor;
       });
       ownerMessageContent.forEach(element => {
-        element.style.color = lightTheme.TextColor;
+        element.style.color = "red";
       });
       messageContentP.forEach(element => {
         element.style.backgroundColor = lightTheme.BackgroundColor;
@@ -43,7 +43,7 @@ export const Message = ({message}) => {
         element.style.color = darkTheme.TextColor;
       });
       ownerMessageContent.forEach(element => {
-        element.style.color = darkTheme.TextColor;
+        element.style.color = "red";
       });
       messageContentP.forEach(element => {
         element.style.backgroundColor = darkTheme.BackgroundColor;
